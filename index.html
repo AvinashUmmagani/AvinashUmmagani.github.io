@@ -1,618 +1,1115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>
-    Avinash Ummagani
-  </title>
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
-    name='viewport' />
-  <!--     Fonts and icons     -->
-  <link rel="icon" href="assets/img/favicon.png">
-  <link rel="stylesheet" type="text/css"
-    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-  <!-- CSS Files -->
-  <link href="./assets/css/material-kit.css?v=2.1.1" rel="stylesheet" />
-  <link href="./assets/css/vertical-nav.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avinash Ummagani — Android Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #16161f;
+      --border: #1e1e2e;
+      --accent: #7c6af7;
+      --accent2: #4ecca3;
+      --accent3: #f7866a;
+      --text: #e8e8f0;
+      --muted: #6b6b80;
+      --muted2: #3a3a50;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.2rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10,10,15,0.7);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .nav-logo {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent2); }
+
+    .nav-cta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      padding: 0.5rem 1.2rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.2s;
+      letter-spacing: 0.06em;
+    }
+
+    .nav-cta:hover { background: var(--accent); color: #fff; }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(124,106,247,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,106,247,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+    }
+
+    .glow-1 {
+      background: rgba(124,106,247,0.12);
+      top: -10%;
+      right: 5%;
+    }
+
+    .glow-2 {
+      background: rgba(78,204,163,0.08);
+      bottom: -10%;
+      left: 10%;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 900px;
+    }
+
+    .hero-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent2);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--accent2);
+    }
+
+    h1 {
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    h1 .line2 {
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.2);
+    }
+
+    .hero-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      color: var(--muted);
+      margin: 1.5rem 0 2.5rem;
+      max-width: 560px;
+      line-height: 1.8;
+    }
+
+    .hero-sub strong { color: var(--accent); font-weight: 400; }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      padding: 0.85rem 2rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary:hover { background: #6a58e0; transform: translateY(-1px); }
+
+    .btn-ghost {
+      padding: 0.85rem 2rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-ghost:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-num {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+    }
+
+    .stat-num span { color: var(--accent); }
+
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.2rem;
+    }
+
+    /* ─── SECTIONS COMMON ─── */
+    section {
+      padding: 7rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent) 0%, transparent 70%);
+      margin-bottom: 3.5rem;
+      opacity: 0.3;
+    }
+
+    /* ─── ABOUT ─── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.9;
+      margin-bottom: 1.25rem;
+    }
+
+    .about-text p strong { color: var(--text); font-weight: 600; }
+
+    .about-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .about-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .about-link:hover { color: var(--accent2); }
+
+    .about-link .icon {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .about-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: border-color 0.2s;
+    }
+
+    .info-card:hover { border-color: var(--muted2); }
+
+    .card-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+      margin-top: 0.1rem;
+    }
+
+    .card-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-desc {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ─── EXPERIENCE ─── */
+    #experience { border-top: 1px solid var(--border); }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 3rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .exp-item:last-child { border-bottom: none; }
+
+    .exp-meta {
+      padding-top: 0.25rem;
+    }
+
+    .exp-period {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .exp-company {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .exp-location {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted2);
+    }
+
+    .exp-role {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .exp-bullets li {
+      font-size: 0.92rem;
+      color: var(--muted);
+      padding-left: 1.25rem;
+      position: relative;
+      line-height: 1.7;
+    }
+
+    .exp-bullets li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.7rem;
+      top: 0.25rem;
+    }
+
+    .exp-bullets li strong { color: var(--text); font-weight: 600; }
+
+    .exp-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      padding: 0.3rem 0.75rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── SKILLS ─── */
+    #skills { border-top: 1px solid var(--border); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .skill-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .skill-block:hover {
+      border-color: var(--muted2);
+      transform: translateY(-2px);
+    }
+
+    .skill-block-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 1rem;
+    }
+
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.3rem 0.75rem;
+      background: var(--surface2);
+      border-radius: 4px;
+      color: var(--text);
+    }
+
+    /* ─── PROJECTS ─── */
+    #projects { border-top: 1px solid var(--border); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(124,106,247,0.06), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .project-card:hover::before { opacity: 1; }
+
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-icon { font-size: 1.5rem; }
+
+    .project-link-icon {
+      color: var(--muted2);
+      font-size: 1rem;
+      transition: color 0.2s;
+    }
+
+    .project-card:hover .project-link-icon { color: var(--accent); }
+
+    .project-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .project-desc {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .project-tech span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.55rem;
+      background: var(--surface2);
+      border-radius: 3px;
+      color: var(--accent2);
+    }
+
+    /* ─── EDUCATION ─── */
+    #education { border-top: 1px solid var(--border); }
+
+    .edu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .edu-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 3rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+
+    .edu-item:last-child { border-bottom: none; }
+
+    .edu-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      padding-top: 0.3rem;
+    }
+
+    .edu-degree {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .edu-institute {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .edu-score {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent2);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+    }
+
+    .footer-copy {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted2);
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 1.25rem;
+    }
+
+    .footer-socials a {
+      color: var(--muted2);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.2s;
+    }
+
+    .footer-socials a:hover { color: var(--accent); }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--muted2); border-radius: 2px; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-content > * {
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .hero-tag { animation-delay: 0.1s; }
+    h1 { animation-delay: 0.2s; }
+    .hero-sub { animation-delay: 0.35s; }
+    .hero-actions { animation-delay: 0.5s; }
+    .hero-stats { animation-delay: 0.65s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero { padding: 7rem 1.5rem 3rem; }
+      section { padding: 5rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+      .edu-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .hero-stats { gap: 2rem; }
+    }
+
+    @media (max-width: 600px) {
+      .skills-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
+<body>
 
-<body class="profile-page sidebar-collapse" id="home">
-  <nav class="navbar navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
-    <div class="container">
-      <div class="navbar-translate">
-        <a class="navbar-brand" href="index.html">
-          <b>Avinash Ummagani</b>  </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false"
-          aria-label="Toggle navigation">
-          <span class="sr-only"></span>
-          <!-- Toggle Navigation -->
-          <span class="navbar-toggler-icon"></span>
-          <span class="navbar-toggler-icon"></span>
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a href="index.html" class="nav-link" >
-              Home
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#aboutme" class="nav-link">
-              About Me
-            </a>
-          </li>
-          <li class="dropdown nav-item">
-            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                Projects
-              <div class="ripple-container"></div></a>
-            <div class="dropdown-menu">
-              <a href="https://github.com/AvinashUmmagani/Gender-Recognition-using-Speech-Analysis" target="_blank" class="dropdown-item">
-                Gender Recognition 
-              </a>
-              <a href="https://github.com/AvinashUmmagani/project-EDITH" target="_blank" class="dropdown-item">
-                Project Edith
-              </a>
-              <a href="https://github.com/AvinashUmmagani/eCom" target="_blank" class="dropdown-item">
-                Project eCom
-              </a>
-              <a href="https://github.com/AvinashUmmagani/Covid19-Data-Analysis-and-Visualisation" target="_blank" class="dropdown-item">
-                Covid19 Data Analysis
-              </a>
-              <a href="https://github.com/AvinashUmmagani/Speech-Enhancer" target="_blank" class="dropdown-item">
-                Speech Enhancement
-              </a>
-              <a href="https://drive.matlab.com/sharing/b97e08ab-7dc9-422b-92d7-12ce31fdee98" target="_blank" class="dropdown-item">
-                Project BCSAT
-              </a>
-              <a href="https://github.com/AvinashUmmagani/WeatherNow" target="_blank" class="dropdown-item">
-                Weather App
-              </a>
-            </div>
-          </li>
-          
-          <li class="nav-item">
-            <a href="assets/docs/Resume.pdf" class="nav-link" target="_blank">
-              Resume
-            </a>
-          </li>
-          <li class="button-container nav-item iframe-extern">
-            <a href="mailto: ummagani.avinash@gmail.com" class="btn  btn-info btn-round btn-block">
-              Contact me
-            <div class="ripple-container"></div></a>
-          </li>
-        </ul>
-      </div>
-    </div>
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">AU<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#education">education</a></li>
+    </ul>
+    <a href="mailto:avinash.ummagani@gmail.com" class="nav-cta">get in touch →</a>
   </nav>
-  <div class="page-header header-filter" data-parallax="true"
-    style="background-image: url('./assets/img/profile.jpg');"></div>
-  <div class="main main-raised">
-    <div class="profile-content">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 ml-auto mr-auto">
-            <div class="profile">
-              <div class="avatar">
-                <img src="https://i.imgur.com/AahTtTW.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
-              </div>
-              <div class="name">
-                <h3 class="title">Avinash Ummagani</h3>
-                <h6>Eletronics and Communication Engineering Student</h6>
-                <a href="https://github.com/AvinashUmmagani" class="btn btn-just-icon btn-round btn-github" target="_blank"><i
-                    class="fa fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/avinash-ummagani/" class="btn btn-just-icon btn-round btn-linkedin"
-                  target="_blank"><i class="fa fa-linkedin"></i></a>
-                <a href="https://avinashummagani.github.io" class="btn btn-just-icon btn-round btn-google"
-                  target="_blank"><i class="fa fa-globe"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="description text-center" id="aboutme">
-          <p>I am an Electronics and Communication Engineer </p>
-          <br>
-          <p><h6>Career Objective</h6></p>
-          <p>I am a technology enthusiast who's in the quest of a responsible career opportunity, where I can fully utilize my
-            training, resources, and skills while making a significant contribution to the success of my
-            employer.</p>
-        </div>
-        
-        <!-- START OF EDUCATION SECTION -->
-        <div class="features-2" id="education">
-          <div class="row">
-            <div class="col-md-8 ml-auto mr-auto text-center">
-              <h2 class="title">Education</h2>
-              <h5 class="description">I am currently in 7th semester of my Bachelor's degree in Technology (Electronics   and Communication Engineering) at VNR Vignana Jyothi Institute of Engineering and Technology. 
-              </h5>
-            </div>
-          </div>
-          <div class="tab-pane academia">
-            <div class="row">
-              <div class="col-md-11 ml-auto mr-auto text-center">
-                <div id="accordion" role="tablist">
 
-                  <div class="card card-collapse">
-                    <div class="card-header" role="tab" id="headingOne">
-                      <h5 class="mb-0">
-                        <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
-                          class="">
-                            Eletronics and Communication Engineering
-                          <i class="material-icons">keyboard_arrow_down</i>
-                        </a>
-                      </h5>
-                    </div>
-                    <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne"
-                      data-parent="#accordion">
-                      <div class="card-body text-left">
-                        <p><strong>Institute: </strong>VNR Vignana Jyothi Institute of Engineering and Technology</p>
-                        <p><strong>Year: </strong>2017-21 (Still pursuing)</p>
-                        <p><strong>CGPA: </strong>9.3</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card card-collapse">
-                    <div class="card-header" role="tab" id="headingTwo">
-                      <h5 class="mb-0">
-                        <a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false"
-                          aria-controls="collapseTwo">
-                          Intermediate
-                          <i class="material-icons">keyboard_arrow_down</i>
-                        </a>
-                      </h5>
-                    </div>
-                    <div id="collapseTwo" class="collapse show" role="tabpanel" aria-labelledby="headingTwo"
-                      data-parent="#accordion">
-                      <div class="card-body text-left">
-                        <p><strong>Institute: </strong>Shivani Junior College, Hanamkonda</p>
-                        <p><strong>Year: </strong>2015-17</p>
-                        <p><strong>Percentage: </strong>98.7%</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card card-collapse">
-                    <div class="card-header" role="tab" id="headingThree">
-                      <h5 class="mb-0">
-                        <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false"
-                          aria-controls="collapseThree">
-                          SSC
-                          <i class="material-icons">keyboard_arrow_down</i>
-                        </a>
-                      </h5>
-                    </div>
-                    <div id="collapseThree" class="collapse show" role="tabpanel" aria-labelledby="headingThree"
-                      data-parent="#accordion">
-                      <div class="card-body text-left">
-                        <p><strong>Institute: </strong>Vignan High School, Hanamkonda</p>
-                        <p><strong>Year: </strong>2014-15</p>
-                        <p><strong>CGPA: </strong>9.7</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+  <!-- HERO -->
+  <div id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow glow-1"></div>
+    <div class="hero-glow glow-2"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Software Engineer · Android · AOSP</div>
+      <h1>
+        Avinash<br>
+        <span class="line2">Ummagani</span>
+      </h1>
+      <p class="hero-sub">
+        Building <strong>Android & AOSP-based systems</strong> for STB and DTH platforms.<br>
+        4+ years crafting modular, hardware-integrated Android experiences — from Setup Wizards to WebRTC remotes.
+      </p>
+      <div class="hero-actions">
+        <a href="https://github.com/AvinashUmmagani" target="_blank" class="btn-primary">
+          ⬡ GitHub Profile
+        </a>
+        <a href="https://linkedin.com/in/avinash-ummagani" target="_blank" class="btn-ghost">
+          LinkedIn ↗
+        </a>
+        <a href="https://avinashummagani.github.io" target="_blank" class="btn-ghost">
+          Portfolio ↗
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">4<span>+</span></div>
+          <div class="stat-label">Years Experience</div>
         </div>
-        <!-- END OF EDUCATION SECTION -->
-
-        <!-- START OF SKILLS SECTION -->
-        <div class="features-1" id="skills">
-          <div class="row">
-            <div class="col-md-8 ml-auto mr-auto">
-              <h2 class="title">Skills</h2>
-              <h5 class="description">Some of the skills that I have acquired during my course of study are listed below.
-              </h5>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="info">
-                <div class="icon icon-info">
-                  <i class="material-icons">code</i>
-                </div>
-                <h4 class="info-title">Programming Languages</h4>
-                <div class="col justify-content-center">
-                  <span class="badge badge-pill badge-info">C Programming</span>
-                  <span class="badge badge-pill badge-danger">Python</span>
-                  <span class="badge badge-pill badge-primary">Core Java</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="info">
-                <div class="icon icon-success">
-                  <i class="material-icons">developer_mode</i>
-                </div>
-                <h4 class="info-title">Frameworks | Tools </h4>
-                <div class="col justify-content-center">
-                  <span class="badge badge-pill badge-info">Django</span>
-                  <span class="badge badge-pill badge-info">Matlab</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="info">
-                <div class="icon icon-warning">
-                  <i class="material-icons">storage</i>
-                </div>
-                <h4 class="info-title">Database</h4>
-                <div class="col justify-content-center">
-                  <span class="badge badge-pill badge-info">SQL</span>
-                  <span class="badge badge-pill badge-success">MongoDB</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="info">
-                <div class="icon icon-danger">
-                  <i class="material-icons">brush</i>
-                </div>
-                <h4 class="info-title">Graphic designing</h4>
-                <div class="col justify-content-center">
-                  <span class="badge badge-pill badge-info">Figma</span>
-                  <span class="badge badge-pill badge-info">Adobe XD</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="info">
-                <div class="icon icon-rose">
-                  <i class="fab fa-html5"></i>
-                </div>
-                <h4 class="info-title">Web Technologies</h4>
-                <div class="col justify-content-center">
-                  <span class="badge badge-pill badge-info">HTML</span>
-                  <span class="badge badge-pill badge-danger">CSS</span>
-                  <span class="badge badge-pill badge-primary">Java Script</span>
-                  <span class="badge badge-pill badge-warning">React</span>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div>
+          <div class="stat-num">2</div>
+          <div class="stat-label">Companies</div>
         </div>
-        <!-- END OF SKILLS SECTION -->
-
-        <!-- START OF POSITIONS OF RESPONSIBILITY SECTION -->
-        <div class="features-3" id="certifications">
-          <div class="row">
-            <div class="col-md-8 ml-auto mr-auto text-center">
-              <h2 class="title">Certifications</h2>
-                    <h4 class="description">
-                        Data Structures through Python - <strong> NPTEL</strong> 
-                    </h4>
-                    <h4 class="description">
-                      Django for Beginners - <strong> Udemy</strong> 
-                    </h4>
-                     <h4 class="description">
-                      Frontend development using React - <strong> Coursera </strong> 
-                    </h4>
-            </div>
-          </div>
+        <div>
+          <div class="stat-num">A6<span>→</span>11</div>
+          <div class="stat-label">Android Versions</div>
         </div>
-        <!-- END OF POSITIONS OF RESPONSIBILITY SECTION -->
-        <!-- START OF PROJECTS SECTION -->
-
-        <div class="features-4" id="projects">
-          <div class="row">
-            <div class="col-md-8 ml-auto mr-auto text-center">
-              <h2 class="title">Projects</h2>
-              <h5 class="description"></h5>
-            </div>
-          </div>
-          <div class="row" >
-            <div class="col-md-4 col-lg-4 ml-auto mr-auto">
-              <div class="rotating-card-container" style="margin-bottom: 30px;">
-                <div class="card card-rotate">
-                  <div class="front" style="width: 330px;">
-                    <div class="card-body">
-                      <h5 class="card-category card-category-social text-dark">
-                        <i class="fa fa-github"></i> Github Repo for
-                      </h5>
-                      <h4 class="card-title">
-                        <a href="https://github.com/AvinashUmmagani/Gender-Recognition-using-Speech-Analysis"
-                          target="_blank">Gender Recognition using Speech analysis</a>
-                      </h4>
-                      <p class="card-description">
-                        This project aims at detecting gender of the speaker, which has many applications in human-computer aided tasks.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="back" style="width: 330px;">
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        Read the source code
-                      </h5>
-                      <p class="card-description">
-                      </p>
-                      <div class="footer text-center">
-                        <a href="https://github.com/AvinashUmmagani/Gender-Recognition-using-Speech-Analysis"
-                          class="btn btn-github btn-just-icon btn-fill btn-round" target="_blank">
-                          <i class="fa fa-github"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> 
-              <div class="col-md-4 col-lg-4 ml-auto mr-auto">
-                <div class="rotating-card-container" style="margin-bottom: 30px;">
-                  <div class="card card-rotate">
-                    <div class="front" style="width: 330px;">
-                      <div class="card-body">
-                        <h5 class="card-category card-category-social text-dark">
-                          <i class="fa fa-github"></i> Github Repo for
-                        </h5>
-                        <h4 class="card-title">
-                          <a href="https://drive.matlab.com/sharing/b97e08ab-7dc9-422b-92d7-12ce31fdee98"
-                            target="_blank">Blood Cell Segmentation and Tracking</a>
-                        </h4>
-                        <p class="card-description">
-                             Blood Cell segmentation and tracking is the basic process of many advanced clinical experiments. This project helps in segmenting and tracking blood cells.
-                        </p>
-                      </div>
-                    </div>
-                    <div class="back" style="width: 330px;">
-                      <div class="card-body">
-                        <h5 class="card-title">
-                          Read the source code
-                        </h5>
-                        <p class="card-description">
-                        </p>
-                        <div class="footer text-center">
-                          <a href="https://drive.matlab.com/sharing/b97e08ab-7dc9-422b-92d7-12ce31fdee98"
-                            class="btn btn-github btn-just-icon btn-fill btn-round" target="_blank">
-                            <i class="fa fa-github"></i>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 col-lg-4 ml-auto mr-auto">
-              <div class="rotating-card-container" style="margin-bottom: 30px;">
-                <div class="card card-rotate">
-                  <div class="front" style="width: 330px;">
-                    <div class="card-body">
-                      <h5 class="card-category card-category-social text-dark">
-                        <i class="fa fa-github"></i> Github Repo for
-                      </h5>
-                      <h4 class="card-title">
-                        <a href="https://github.com/AvinashUmmagani/eCom" target="_blank">eCom</a>
-                      </h4>
-                      <p class="card-description">
-                         This is a simple E-Commerce website built using Django. It is fully functional site but media files are still need to be added. 
-                      </p>
-                    </div>
-                  </div>
-                  <div class="back" style="width: 330px;">
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        Check out the project
-                      </h5>
-                      <p class="card-description">
-                        You can check out the project at the following GitHub repository
-                      </p>
-                      <div class="footer text-center">
-                        <a href="https://github.com/AvinashUmmagani/eCom" class="btn btn-just-icon btn-round btn-github"
-                          target="_blank">
-                          <i class="fa fa-github"></i>
-                        </a>
-                        <a href="https://e-comapp.herokuapp.com" class="btn btn-just-icon btn-round btn-github"
-                          target="_blank">
-                          <i class="fa fa-globe"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 col-lg-4 ml-auto mr-auto">
-              <div class="rotating-card-container" style="margin-bottom: 30px;">
-                <div class="card card-rotate">
-                  <div class="front" style="width: 330px;">
-                    <div class="card-body">
-                      <h5 class="card-category card-category-social text-dark">
-                        <i class="fa fa-github"></i> Github Repo for
-                      </h5>
-                      <h4 class="card-title">
-                        <a href="https://github.com/AvinashUmmagani/Gender-Recognition-using-Speech-Analysis"
-                          target="_blank">Project Edith</a>
-                      </h4>
-                      <p class="card-description">
-                        A smart Assistant for visually impaired. It uses object detection, open cv, and Text to speech Converter 
-                      </p>
-                    </div>
-                  </div>
-                  <div class="back" style="width: 330px;">
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        Read the source code
-                      </h5>
-                      <p class="card-description">
-                      </p>
-                      <div class="footer text-center">
-                        <a href="https://github.com/AvinashUmmagani/project-EDITH"
-                          class="btn btn-github btn-just-icon btn-fill btn-round" target="_blank">
-                          <i class="fa fa-github"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 col-lg-4 ml-auto mr-auto">
-              <div class="rotating-card-container" style="margin-bottom: 30px;">
-                <div class="card card-rotate">
-                  <div class="front" style="width: 330px;">
-                    <div class="card-body">
-                      <h5 class="card-category card-category-social text-dark">
-                        <i class="fa fa-github"></i> Github Repo for
-                      </h5>
-                      <h4 class="card-title">
-                        <a href="https://github.com/AvinashUmmagani/Covid19-Data-Analysis-and-Visualisation"
-                          target="_blank">Covid 19 data Analysis</a>
-                      </h4>
-                      <p class="card-description">
-                        A simple project which involves analysis and visualisation of covid19 dataset provided by Johns Hopkins University and Kaggle.  
-                      </p>
-                    </div>
-                  </div>
-                  <div class="back" style="width: 330px;">
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        Read the source code
-                      </h5>
-                      <p class="card-description">
-                      </p>
-                      <div class="footer text-center">
-                        <a href="https://github.com/AvinashUmmagani/Covid19-Data-Analysis-and-Visualisation"
-                          class="btn btn-github btn-just-icon btn-fill btn-round" target="_blank">
-                          <i class="fa fa-github"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 col-lg-4 ml-auto mr-auto">
-              <div class="rotating-card-container" style="margin-bottom: 30px;">
-                <div class="card card-rotate">
-                  <div class="front" style="width: 330px;">
-                    <div class="card-body">
-                      <h5 class="card-category card-category-social text-dark">
-                        <i class="fa fa-github"></i> Github Repo for
-                      </h5>
-                      <h4 class="card-title">
-                        <a href="https://github.com/AvinashUmmagani/Content-Blocker" target="_blank">Content Blocker</a>
-                      </h4>
-                      <p class="card-description">
-                         A Chrome extension that provides customized content blocking feature based on the keywords provided to extension.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="back" style="width: 330px;">
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        Check out the project
-                      </h5>
-                      <p class="card-description">
-                        You can check out the project at the following GitHub repository
-                      </p>
-                      <div class="footer text-center">
-                        <a href="https://github.com/AvinashUmmagani/Content-Blocker" class="btn btn-just-icon btn-round btn-github"
-                          target="_blank">
-                          <i class="fa fa-github"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- END OF PROJECTS SECTION -->
       </div>
     </div>
   </div>
-  <h4 class="description  text-center"> <strong> For more projects, visit  github.com/AvinashUmmagani </strong></h4>
-  <br>
-  <!-- SCRIPTS START -->
-  <!--   Core JS Files   -->
-  <script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
-  <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-  <script src="./assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-  <script src="./assets/js/plugins/moment.min.js"></script>
-  <!--	Plugin for Tags -->
-  <script src="./assets/js/plugins/bootstrap-tagsinput.js"></script>
-  <!--	Plugin for Small Gallery -->
-  <script src="./assets/js/plugins/jquery.flexisel.js" type="text/javascript"></script>
-  <!-- Plugin for Vertical Nav Bar -->
-  <script src="./assets/js/vertical-nav.js" type="text/javascript"></script>
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Material Kit-->
-  <script src="./assets/js/material-kit.js?v=2.1.1" type="text/javascript"></script>
-  <!-- SCRIPTS END -->
-  <!-- VERTICAL NAV BAR -->
-  <nav id="cd-vertical-nav">
-    <ul>
-      <li>
-        <a href="#aboutme" data-number="1">
-          <span class="cd-dot"></span>
-          <span class="cd-label">About Me</span>
-        </a>
-      </li>
-      <li>
-        <a href="#education" data-number="2">
-          <span class="cd-dot"></span>
-          <span class="cd-label">Education</span>
-        </a>
-      </li>
-      <li>
-        <a href="#skills" data-number="3">
-          <span class="cd-dot"></span>
-          <span class="cd-label">Skills</span>
-        </a>
-      </li>
-      <li>
-        <a href="#certifications" data-number="4">
-          <span class="cd-dot"></span>
-          <span class="cd-label">Certifications</span>
-        </a>
-      </li>
-      <li>
-        <a href="#projects" data-number="4">
-          <span class="cd-dot"></span>
-          <span class="cd-label">Projects</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
-  <footer class="footer footer-black">
-    <div class="container">
-      <a class="footer-brand" href="index.html">Avinash Ummagani</a>
-      <ul class="social-buttons float-right">
-        <li>
-          <a href="https://www.github.com/AvinashUmmagani" target="_blank" class="btn btn-just-icon btn-link">
-            <i class="fa fa-github"></i>
-          </a>
-        </li>
-        <li>
-          <a href="https://www.instagram.com/avinash_ummagani" target="_blank" class="btn btn-just-icon btn-link">
-            <i class="fa fa-instagram"></i>
-          </a>
-        </li>
-        <li>
-          <a href="https://www.facebook.com/avinash.ummagani" target="_blank" class="btn btn-just-icon btn-link">
-            <i class="fa fa-facebook-square"></i>
-          </a>
-        </li>
-        <li>
-          <a href="https://twitter.com/AvinashUmmagani" target="_blank" class="btn btn-just-icon btn-link">
-            <i class="fa fa-twitter"></i>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </footer>
-</body>
 
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">// 01 · about</div>
+    <h2>Who I Am</h2>
+    <div class="section-divider"></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm an <strong>Android Engineer</strong> based in Hyderabad, India, specializing in AOSP-based system application development for embedded STB and DTH consumer platforms.
+        </p>
+        <p>
+          At <strong>Caavo Labs</strong>, I've worked on Falcon — an Android 11 AOSP DTH platform — migrating legacy monolithic apps into scalable modular systems, building hardware-integrated features using HDMI-CEC and BLE, and shipping user-facing experiences from Setup Wizards to video calling.
+        </p>
+        <p>
+          I care deeply about clean architecture, well-structured codebases, and the intersection of software and hardware on embedded Android platforms.
+        </p>
+        <div class="about-links">
+          <a href="mailto:avinash.ummagani@gmail.com" class="about-link">
+            <div class="icon">✉</div>
+            avinash.ummagani@gmail.com
+          </a>
+          <a href="https://github.com/AvinashUmmagani" target="_blank" class="about-link">
+            <div class="icon">⬡</div>
+            github.com/AvinashUmmagani
+          </a>
+          <a href="https://linkedin.com/in/avinash-ummagani" target="_blank" class="about-link">
+            <div class="icon">in</div>
+            linkedin.com/in/avinash-ummagani
+          </a>
+          <a href="https://avinashummagani.github.io" target="_blank" class="about-link">
+            <div class="icon">⊕</div>
+            avinashummagani.github.io
+          </a>
+        </div>
+      </div>
+      <div class="about-cards">
+        <div class="info-card">
+          <div class="card-icon">📱</div>
+          <div>
+            <div class="card-title">Android & AOSP Systems</div>
+            <div class="card-desc">System apps, AOSP builds, Soong toolchain, Gerrit workflows. Deep platform-layer experience.</div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="card-icon">🧩</div>
+          <div>
+            <div class="card-title">Modular Architecture</div>
+            <div class="card-desc">Migrated monoliths to multi-module systems using MVVM, Jetpack, and clean separation of concerns.</div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="card-icon">🔌</div>
+          <div>
+            <div class="card-title">Hardware Integrations</div>
+            <div class="card-desc">HDMI-CEC, BLE (SwitchBot), WebRTC, OpenTok, Zoom SDK — bridging software and physical hardware.</div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="card-icon">🏗️</div>
+          <div>
+            <div class="card-title">STB / Embedded Platforms</div>
+            <div class="card-desc">Consumer DTH Set-Top Box development with platform, hardware, backend, and QA team collaboration.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label">// 02 · experience</div>
+    <h2>Where I've Worked</h2>
+    <div class="section-divider"></div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Apr 2022 — Present</div>
+        <div class="exp-company">Caavo Labs India</div>
+        <div class="exp-location">Hyderabad, India</div>
+      </div>
+      <div>
+        <div class="exp-role">Software Engineer</div>
+        <ul class="exp-bullets">
+          <li>Worked on <strong>Falcon</strong>, a consumer Direct-to-Home (DTH) Android STB platform built on AOSP Android 11.</li>
+          <li>Migrated a legacy monolithic Android app into <strong>multiple modular system apps</strong>, improving maintainability and separation of concerns.</li>
+          <li>Developed <strong>Setup Wizard</strong> flows for onboarding, first-boot experience, and device network configuration.</li>
+          <li>Built a <strong>Favorites</strong> app using MVVM architecture with Room database for persistent local storage.</li>
+          <li>Implemented <strong>Universal Remote Control</strong> and <strong>Telescope</strong> features for remote TV control using WebRTC.</li>
+          <li>Developed <strong>Smart Plug</strong> integrations to detect TV power state using HDMI-CEC and BLE-based SwitchBot devices.</li>
+          <li>Worked with AOSP System Updater and gained exposure to the Android Update Engine.</li>
+          <li>Developed <strong>CaavoTalk</strong> UI for video calling and chat using OpenTok SDK.</li>
+          <li>Integrated <strong>Zoom Meeting SDK</strong> for video conferencing capabilities.</li>
+          <li>Built <strong>Photos & Videos gallery</strong> apps using Glide and ExoPlayer.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">Kotlin</span>
+          <span class="tag">AOSP</span>
+          <span class="tag">Android 11</span>
+          <span class="tag">MVVM</span>
+          <span class="tag">WebRTC</span>
+          <span class="tag">HDMI-CEC</span>
+          <span class="tag">BLE</span>
+          <span class="tag">OpenTok</span>
+          <span class="tag">Zoom SDK</span>
+          <span class="tag">ExoPlayer</span>
+          <span class="tag">Room</span>
+          <span class="tag">Soong</span>
+          <span class="tag">Gerrit</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Jul 2021 — Apr 2022</div>
+        <div class="exp-company">Tata Consultancy Services</div>
+        <div class="exp-location">Hyderabad, India</div>
+      </div>
+      <div>
+        <div class="exp-role">Systems Engineer</div>
+        <ul class="exp-bullets">
+          <li>Worked as a Native Android Developer on enterprise Android applications.</li>
+          <li>Developed application features using <strong>Kotlin and Java</strong> following Android best practices.</li>
+          <li>Collaborated with QA and backend teams in <strong>Agile</strong> environments to deliver stable, maintainable Android solutions.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">Kotlin</span>
+          <span class="tag">Java</span>
+          <span class="tag">Android SDK</span>
+          <span class="tag">Agile</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">// 03 · skills</div>
+    <h2>Technical Skills</h2>
+    <div class="section-divider"></div>
+    <div class="skills-grid">
+      <div class="skill-block">
+        <div class="skill-block-title">Languages</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Kotlin</span>
+          <span class="skill-pill">Java</span>
+          <span class="skill-pill">JavaScript</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">Android & AOSP</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Android SDK</span>
+          <span class="skill-pill">AOSP</span>
+          <span class="skill-pill">System Apps</span>
+          <span class="skill-pill">Jetpack Compose</span>
+          <span class="skill-pill">ViewModel</span>
+          <span class="skill-pill">LiveData</span>
+          <span class="skill-pill">Room</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">Architecture</div>
+        <div class="skill-pills">
+          <span class="skill-pill">MVVM</span>
+          <span class="skill-pill">Modular Architecture</span>
+          <span class="skill-pill">Monolith → Modular</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">Build & Version Control</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Soong</span>
+          <span class="skill-pill">Gradle</span>
+          <span class="skill-pill">Git</span>
+          <span class="skill-pill">Gerrit</span>
+          <span class="skill-pill">Bitbucket</span>
+          <span class="skill-pill">GitHub</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">Media & Networking</div>
+        <div class="skill-pills">
+          <span class="skill-pill">ExoPlayer</span>
+          <span class="skill-pill">Glide</span>
+          <span class="skill-pill">WebRTC</span>
+          <span class="skill-pill">REST APIs</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">SDKs & Hardware</div>
+        <div class="skill-pills">
+          <span class="skill-pill">OpenTok</span>
+          <span class="skill-pill">Zoom SDK</span>
+          <span class="skill-pill">HDMI-CEC</span>
+          <span class="skill-pill">BLE / SwitchBot</span>
+          <span class="skill-pill">React Native</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">Databases</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Room</span>
+          <span class="skill-pill">SQLite</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title">Tools & IDEs</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Android Studio</span>
+          <span class="skill-pill">VS Code</span>
+          <span class="skill-pill">Figma</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">// 04 · projects</div>
+    <h2>Personal Projects</h2>
+    <div class="section-divider"></div>
+    <div class="projects-grid">
+      <a href="https://github.com/AvinashUmmagani/Gender-Recognition-using-Speech-Analysis" target="_blank" class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🎙️</div>
+          <div class="project-link-icon">↗</div>
+        </div>
+        <div class="project-title">Gender Recognition via Speech</div>
+        <div class="project-desc">Detects gender of a speaker from audio signals, applicable to HCI and voice assistance systems.</div>
+        <div class="project-tech">
+          <span>Python</span><span>Signal Processing</span><span>ML</span>
+        </div>
+      </a>
+      <a href="https://github.com/AvinashUmmagani/project-EDITH" target="_blank" class="project-card">
+        <div class="project-header">
+          <div class="project-icon">👁️</div>
+          <div class="project-link-icon">↗</div>
+        </div>
+        <div class="project-title">Project EDITH</div>
+        <div class="project-desc">Smart assistant for the visually impaired using object detection, OpenCV, and text-to-speech.</div>
+        <div class="project-tech">
+          <span>Python</span><span>OpenCV</span><span>TTS</span><span>Object Detection</span>
+        </div>
+      </a>
+      <a href="https://github.com/AvinashUmmagani/eCom" target="_blank" class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🛒</div>
+          <div class="project-link-icon">↗</div>
+        </div>
+        <div class="project-title">eCom</div>
+        <div class="project-desc">A fully functional e-commerce web application built with Django and deployed to Heroku.</div>
+        <div class="project-tech">
+          <span>Django</span><span>Python</span><span>SQL</span><span>Heroku</span>
+        </div>
+      </a>
+      <a href="https://github.com/AvinashUmmagani/Covid19-Data-Analysis-and-Visualisation" target="_blank" class="project-card">
+        <div class="project-header">
+          <div class="project-icon">📊</div>
+          <div class="project-link-icon">↗</div>
+        </div>
+        <div class="project-title">Covid-19 Data Analysis</div>
+        <div class="project-desc">Analysis and visualisation of the Johns Hopkins & Kaggle Covid-19 dataset using Python.</div>
+        <div class="project-tech">
+          <span>Python</span><span>Pandas</span><span>Matplotlib</span>
+        </div>
+      </a>
+      <a href="https://github.com/AvinashUmmagani/Speech-Enhancer" target="_blank" class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🔊</div>
+          <div class="project-link-icon">↗</div>
+        </div>
+        <div class="project-title">Speech Enhancer</div>
+        <div class="project-desc">Noise reduction and speech enhancement using signal processing algorithms.</div>
+        <div class="project-tech">
+          <span>Matlab</span><span>Signal Processing</span>
+        </div>
+      </a>
+      <a href="https://github.com/AvinashUmmagani/WeatherNow" target="_blank" class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🌦️</div>
+          <div class="project-link-icon">↗</div>
+        </div>
+        <div class="project-title">WeatherNow</div>
+        <div class="project-desc">A real-time weather application fetching live data via a public weather API.</div>
+        <div class="project-tech">
+          <span>JavaScript</span><span>REST API</span><span>HTML/CSS</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-label">// 05 · education</div>
+    <h2>Education</h2>
+    <div class="section-divider"></div>
+    <div class="edu-list">
+      <div class="edu-item">
+        <div class="edu-year">2017 — 2022</div>
+        <div>
+          <div class="edu-degree">B.Tech — Electronics & Communication Engineering</div>
+          <div class="edu-institute">VNR Vignana Jyothi Institute of Engineering and Technology, Hyderabad</div>
+          <div class="edu-score">CGPA: 9.4 / 10</div>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-year">2015 — 2017</div>
+        <div>
+          <div class="edu-degree">Intermediate (MPC)</div>
+          <div class="edu-institute">Shivani Junior College, Hanamkonda</div>
+          <div class="edu-score">98.7%</div>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-year">2014 — 2015</div>
+        <div>
+          <div class="edu-degree">SSC</div>
+          <div class="edu-institute">Vignan High School, Hanamkonda</div>
+          <div class="edu-score">GPA: 9.0 / 10</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-name">Avinash Ummagani</div>
+      <div class="footer-copy">© 2026 · Hyderabad, India</div>
+    </div>
+    <div class="footer-socials">
+      <a href="https://github.com/AvinashUmmagani" target="_blank" title="GitHub">⬡</a>
+      <a href="https://linkedin.com/in/avinash-ummagani" target="_blank" title="LinkedIn">in</a>
+      <a href="mailto:avinash.ummagani@gmail.com" title="Email">✉</a>
+      <a href="https://avinashummagani.github.io" target="_blank" title="Portfolio">⊕</a>
+    </div>
+    <div class="footer-copy">Software Engineer · Android · AOSP</div>
+  </footer>
+
+</body>
 </html>
