@@ -1,2 +1,2 @@
-# AvinashUmmagani.github.io
+# avinashummagani.github.io
 My Portfolio
