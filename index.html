@@ -3,406 +3,105 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script src="assets/js/theme.js"></script>
 <title>Avinash Ummagani — Software Engineer, Android</title>
-<meta name="description" content="Avinash Ummagani — Android engineer with 5+ years building system apps on AOSP-based devices. Modular architecture, real-time communication, hardware integration." />
+<meta name="description" content="Avinash Ummagani — software engineer working since July 2021, specializing in Android and AOSP. Application architecture, real-time communication, device integration, and system reliability." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<style>
-  :root{
-    --bg: #0a0a0d;
-    --bg-raised: #101014;
-    --line: #232329;
-    --accent: #3d8bff;
-    --accent-dim: #1f4c94;
-    --text: #f2f1ed;
-    --text-muted: #9a9aa2;
-    --text-faint: #4c4c54;
-    --font-display: 'Bricolage Grotesque', sans-serif;
-    --font-body: 'IBM Plex Sans', sans-serif;
-    --font-mono: 'IBM Plex Mono', monospace;
-    --max: 900px;
-  }
-
-  *{ box-sizing: border-box; margin: 0; padding: 0; }
-  html{ scroll-behavior: smooth; }
-
-  @media (prefers-reduced-motion: reduce){
-    html{ scroll-behavior: auto; }
-    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  }
-
-  body{
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
-
-  a{ color: inherit; }
-  ::selection{ background: var(--accent-dim); color: var(--text); }
-  :focus-visible{ outline: 2px solid var(--accent); outline-offset: 3px; }
-
-  .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 32px; }
-
-  /* ---------- nav ---------- */
-  .topnav{
-    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-    display: flex; justify-content: center; padding: 26px 0;
-    mix-blend-mode: difference;
-  }
-  .topnav .wrap{ max-width: var(--max); width: 100%; display: flex; justify-content: space-between; align-items: center; }
-  .topnav .mark{ font-family: var(--font-display); font-weight: 700; font-size: 15px; letter-spacing: -0.02em; }
-  .topnav ul{ list-style: none; display: flex; gap: 30px; }
-  .topnav a{
-    text-decoration: none; font-family: var(--font-mono); font-size: 11px;
-    text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted);
-  }
-  @media (max-width: 460px){ .topnav ul{ display: none; } }
-
-  /* ---------- ghost numeral ---------- */
-  .ghost-num{
-    position: absolute;
-    top: -0.28em; right: -0.02em;
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(120px, 22vw, 260px);
-    color: transparent;
-    -webkit-text-stroke: 1px var(--line);
-    line-height: 1;
-    z-index: 0;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  /* ---------- hero ---------- */
-  .hero{
-    position: relative;
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 140px 0 60px;
-  }
-
-  .eyebrow{
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 28px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .eyebrow::before{
-    content: '';
-    width: 7px; height: 7px;
-    background: var(--accent);
-    border-radius: 50%;
-    animation: dot-pulse 2.2s ease-in-out infinite;
-  }
-  @keyframes dot-pulse{ 0%,100%{ opacity: 1; } 50%{ opacity: 0.25; } }
-
-  .hero-name{
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(52px, 10.5vw, 128px);
-    line-height: 0.92;
-    letter-spacing: -0.03em;
-    margin-bottom: 6px;
-  }
-  .hero-name .line{ display: block; overflow: hidden; }
-  .hero-name .line span{
-    display: block;
-    transform: translateY(110%);
-    animation: line-up 0.85s cubic-bezier(.16,1,.3,1) forwards;
-  }
-  .hero-name .line:nth-child(2) span{ animation-delay: 0.08s; }
-
-  @keyframes line-up{ to{ transform: translateY(0); } }
-
-  .hero-role{
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: clamp(20px, 3vw, 30px);
-    color: var(--text-muted);
-    margin: 22px 0 30px;
-    max-width: 640px;
-  }
-  .hero-role .hl{
-    color: var(--text);
-    box-shadow: inset 0 -0.32em 0 var(--accent-dim);
-  }
-
-  .tagline{
-    font-size: 16.5px;
-    color: var(--text-muted);
-    max-width: 520px;
-    margin-bottom: 44px;
-  }
-
-  .hero-links{ display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-
-  .btn{
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 13px 22px;
-    text-decoration: none;
-    font-family: var(--font-mono);
-    font-size: 12.5px;
-    letter-spacing: 0.03em;
-    border: 1px solid var(--line);
-    border-radius: 2px;
-    color: var(--text-muted);
-    transition: border-color 0.2s, color 0.2s, background 0.2s;
-  }
-  .btn:hover{ border-color: var(--text-muted); color: var(--text); }
-  .btn.primary{
-    background: var(--accent);
-    color: #06070a;
-    border-color: var(--accent);
-    font-weight: 500;
-  }
-  .btn.primary:hover{ background: #5c9fff; border-color: #5c9fff; }
-
-  /* ---------- section shared ---------- */
-  section{ position: relative; padding: 110px 0; border-top: 1px solid var(--line); overflow: hidden; }
-
-  .section-head{ position: relative; margin-bottom: 60px; z-index: 1; }
-  .section-eyebrow{
-    font-family: var(--font-mono);
-    font-size: 11.5px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 14px;
-  }
-  .section-title{
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(32px, 5vw, 52px);
-    letter-spacing: -0.02em;
-  }
-
-  /* ---------- skills — flowing definition list, no cards ---------- */
-  .skill-list{ position: relative; z-index: 1; }
-  .skill-row{
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 24px;
-    padding: 20px 0;
-    border-top: 1px solid var(--line);
-  }
-  .skill-list .skill-row:last-child{ border-bottom: 1px solid var(--line); }
-  @media (max-width: 640px){
-    .skill-row{ grid-template-columns: 1fr; gap: 6px; }
-  }
-  .skill-cat{
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 17px;
-  }
-  .skill-items{
-    font-size: 15px;
-    color: var(--text-muted);
-  }
-
-  /* ---------- experience — bold headers, accent rule, no dots ---------- */
-  .job{ position: relative; z-index: 1; margin-bottom: 76px; }
-  .job:last-child{ margin-bottom: 0; }
-
-  .job-head{
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    margin-bottom: 6px;
-    flex-wrap: wrap;
-  }
-  .job-role{
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(22px, 3vw, 30px);
-    letter-spacing: -0.01em;
-  }
-  .job-company{ color: var(--accent); font-weight: 500; }
-
-  .job-meta{
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--text-faint);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 4px;
-  }
-  .job-sub{
-    font-size: 14.5px;
-    font-style: italic;
-    color: var(--text-muted);
-    margin-bottom: 26px;
-  }
-
-  .job-bullets{
-    list-style: none;
-    border-left: 2px solid var(--accent-dim);
-    padding-left: 26px;
-  }
-  .job-bullets li{
-    font-size: 15px;
-    color: var(--text-muted);
-    line-height: 1.65;
-    margin-bottom: 16px;
-  }
-  .job-bullets li:last-child{ margin-bottom: 0; }
-  .job-bullets li strong{ color: var(--text); font-weight: 600; }
-
-  /* ---------- education ---------- */
-  .edu{ position: relative; z-index: 1; }
-  .edu-degree{
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(22px, 3vw, 28px);
-    margin-bottom: 8px;
-  }
-  .edu-meta{
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--text-muted);
-  }
-
-  /* ---------- footer ---------- */
-  footer{ padding: 100px 0 60px; text-align: center; border-top: 1px solid var(--line); }
-  footer .cta{
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(36px, 6vw, 64px);
-    letter-spacing: -0.02em;
-    margin-bottom: 36px;
-  }
-  footer .cta .accent-dot{ color: var(--accent); }
-  footer .contact-links{ display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 44px; }
-  footer .footer-note{ font-family: var(--font-mono); font-size: 11.5px; color: var(--text-faint); letter-spacing: 0.05em; }
-
-  /* ---------- reveal ---------- */
-  .reveal{ opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .reveal.in{ opacity: 1; transform: translateY(0); }
-</style>
+<link rel="stylesheet" href="assets/css/portfolio.css" />
 </head>
 <body>
 
 <nav class="topnav">
   <div class="wrap">
-    <span class="mark">AU/</span>
+    <a class="mark" href="#top" aria-label="Avinash Ummagani home"><span class="mark-symbol">au.</span><span class="mark-name">Avinash Ummagani</span></a>
     <ul>
-      <li><a href="#skills">Skills</a></li>
       <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#contact">Contact</a></li>
+      <li><a class="nav-resume" href="assets/docs/Avinash_Ummagani_Resume.pdf" download>Resume ↗</a></li>
+      <li><button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Switch to dark theme" aria-pressed="false"><svg class="theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 13.1A8.5 8.5 0 0 1 10.9 3.5a8.5 8.5 0 1 0 9.6 9.6Z"/></svg><svg class="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></button></li>
     </ul>
   </div>
 </nav>
 
-<header class="hero">
+<header class="hero" id="top">
   <div class="wrap">
-    <p class="eyebrow">Available · Hyderabad, India · Remote-ready</p>
-    <h1 class="hero-name">
-      <span class="line"><span>Avinash</span></span>
-      <span class="line"><span>Ummagani</span></span>
-    </h1>
-    <p class="hero-role">Software Engineer, <span class="hl">Android</span></p>
-    <p class="tagline">5+ years building Android system apps on AOSP-based devices — from migrating a monolith into modules to real-time device control.</p>
-    <div class="hero-links">
-      <a class="btn primary" href="assets/docs/Avinash_Ummagani_Resume.pdf" download>Download résumé ↓</a>
-      <a class="btn" href="mailto:avinash.ummagani@gmail.com">Email</a>
-      <a class="btn" href="https://github.com/AvinashUmmagani">GitHub</a>
-      <a class="btn" href="https://linkedin.com/in/avinash-ummagani">LinkedIn</a>
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Android engineer · Hyderabad, India</p>
+        <h1 class="hero-name"><span class="line">Avinash</span><span class="line">Ummagani.</span></h1>
+        <p class="hero-role">From Android apps to connected devices.</p>
+        <p class="tagline">I build Android applications and AOSP system software, bringing together real-time communication, device integration, and reliable architecture.</p>
+        <div class="hero-links">
+          <a class="btn primary" href="#experience">Explore my work <span aria-hidden="true">↗</span></a>
+          <a class="btn" href="assets/docs/Avinash_Ummagani_Resume.pdf" download>Download Resume <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="hero-socials"><a href="https://github.com/AvinashUmmagani">GitHub ↗</a><a href="https://linkedin.com/in/avinash-ummagani">LinkedIn ↗</a><a href="mailto:avinash.ummagani@gmail.com">Email ↗</a></div>
+      </div>
+      <div class="system-art" aria-label="Areas of expertise: Android interfaces, AOSP architecture, and connected devices">
+        <div class="art-top"><span>ACROSS THE ANDROID STACK</span><span aria-hidden="true">●</span></div>
+        <div class="device" aria-hidden="true"><div class="device-screen"><span>au.</span></div></div>
+        <div class="art-layer"><span class="layer-number" aria-hidden="true">01</span><div><strong>Thoughtful interfaces</strong><small>Android apps · TV navigation · Media</small></div></div>
+        <div class="art-layer"><span class="layer-number" aria-hidden="true">02</span><div><strong>Reliable systems</strong><small>AOSP · Modular architecture · Shared state</small></div></div>
+        <div class="art-layer"><span class="layer-number" aria-hidden="true">03</span><div><strong>Connected experiences</strong><small>WebRTC · Bluetooth · Device control</small></div></div>
+        <div class="art-bottom"><span>KOTLIN / JAVA / AOSP</span><span>APP → SYSTEM → DEVICE</span></div>
+      </div>
+    </div>
+    <div class="intro-strip">
+      <div><strong id="experience-duration">Since July 2021</strong><span>Software engineering experience</span></div>
+      <div><strong>Android &amp; AOSP</strong><span>Applications and system software</span></div>
+      <div><strong>Caavo Labs</strong><span>Associate Software Engineer</span></div>
     </div>
   </div>
 </header>
 
 <main>
-
-  <section id="skills">
-    <span class="ghost-num" aria-hidden="true">01</span>
+  <section class="highlights" aria-labelledby="highlights-title">
     <div class="wrap">
-      <div class="section-head reveal">
-        <p class="section-eyebrow">01 / Technical skills</p>
-        <h2 class="section-title">Stack &amp; tools</h2>
-      </div>
-      <div class="skill-list reveal">
-        <div class="skill-row">
-          <p class="skill-cat">Languages</p>
-          <p class="skill-items">Kotlin, Java, Python, JavaScript (working knowledge)</p>
-        </div>
-        <div class="skill-row">
-          <p class="skill-cat">Android &amp; AOSP</p>
-          <p class="skill-items">Android SDK, AOSP System Apps, Jetpack Compose, Soong Build System</p>
-        </div>
-        <div class="skill-row">
-          <p class="skill-cat">Architecture</p>
-          <p class="skill-items">MVVM, Modular Architecture, Monolithic-to-Modular Migration</p>
-        </div>
-        <div class="skill-row">
-          <p class="skill-cat">Build &amp; Tooling</p>
-          <p class="skill-items">Gradle, Soong, Repo, Android Studio, VS Code, Figma</p>
-        </div>
-        <div class="skill-row">
-          <p class="skill-cat">Media &amp; Real-Time Comms</p>
-          <p class="skill-items">ExoPlayer, Glide, WebRTC, OpenTok, Zoom SDK</p>
-        </div>
-        <div class="skill-row">
-          <p class="skill-cat">Networking &amp; DI</p>
-          <p class="skill-items">Retrofit, OkHttp, Volley, Gson, Hilt, Coroutines</p>
-        </div>
-        <div class="skill-row">
-          <p class="skill-cat">Data &amp; Persistence</p>
-          <p class="skill-items">Room, SQLite, ViewModel, LiveData</p>
-        </div>
-        <div class="skill-row">
-          <p class="skill-cat">Notifications &amp; Monitoring</p>
-          <p class="skill-items">Socket.io, MQTT, Firebase Crashlytics</p>
-        </div>
-        <div class="skill-row">
-          <p class="skill-cat">Testing &amp; Debugging</p>
-          <p class="skill-items">Appium, Robot Framework, LeakCanary</p>
-        </div>
-        <div class="skill-row">
-          <p class="skill-cat">Version Control</p>
-          <p class="skill-items">Git, GitHub, Bitbucket, Gerrit</p>
-        </div>
+      <div class="section-head"><p class="section-eyebrow">Engineering focus</p><div><h2 class="section-title" id="highlights-title">Built for the real world.</h2><p class="section-description">A few of the challenges I work on, from application structure to the hardware underneath.</p></div></div>
+      <div class="highlight-grid">
+        <article class="highlight"><span class="highlight-number">01 / ARCHITECTURE</span><h3>Independent apps.<br>Resilient systems.</h3><p>Split a monolithic application into separate AOSP system APKs to isolate failures and prevent cascading outages.</p><div class="highlight-tags">AOSP · SOONG · GRADLE</div></article>
+        <article class="highlight"><span class="highlight-number">02 / COMMUNICATION</span><h3>Calling that connects<br>people and devices.</h3><p>Integrated Zoom and OpenTok calling, and built WebRTC from source with custom audio handling for remote control.</p><div class="highlight-tags">WEBRTC · OPENTOK · SOCKET.IO</div></article>
+        <article class="highlight"><span class="highlight-number">03 / RELIABILITY</span><h3>Making every<br>megabyte count.</h3><p>Reduced memory use on 3 GB RAM devices and verified a WebRTC leak fix that resolved failures requiring restarts.</p><div class="highlight-tags">MEMORY · PROFILING · STABILITY</div></article>
       </div>
     </div>
   </section>
 
+
   <section id="experience">
-    <span class="ghost-num" aria-hidden="true">02</span>
+    <span class="ghost-num" aria-hidden="true">01</span>
     <div class="wrap">
       <div class="section-head reveal">
-        <p class="section-eyebrow">02 / Professional experience</p>
-        <h2 class="section-title">Where I've worked</h2>
+        <p class="section-eyebrow">Experience</p>
+        <h2 class="section-title">The work behind the skills.</h2>
       </div>
 
       <article class="job reveal">
         <div class="job-head">
-          <h3 class="job-role">Software Engineer</h3>
+          <h3 class="job-role">Associate Software Engineer</h3>
           <span class="job-company">@ Caavo Labs India Pvt Ltd</span>
         </div>
         <p class="job-meta">Bengaluru, India (Remote) · Apr 2022 – Present</p>
         <p class="job-sub">Remote Caregiving System</p>
         <ul class="job-bullets">
-          <li><strong>Modular architecture migration:</strong> Migrated a legacy monolithic Android codebase to a multi-module architecture, with modules built using Soong and Gradle</li>
-          <li><strong>IPC &amp; shared state:</strong> Built a content provider-based state service for cross-app data sharing, with hands-on experience across Android services, AIDL, and broadcast receivers for inter-process communication</li>
-          <li><strong>System app &amp; device control:</strong> Developed system-level Android apps for device onboarding on an Android 11 (AOSP) device, using the AOSP TV Input Framework, and built universal remote control of connected source devices via IR, IP, CEC, and BT</li>
-          <li><strong>Real-time communication:</strong> Integrated OpenTok and Zoom SDKs for video and audio calling, and used WebRTC for remote TV control. Customized and built the WebRTC Android library from source, adding a custom audio device module to share custom audio data</li>
-          <li><strong>Smart plug integration:</strong> Added BLE and MQTT-based smart plug integrations, along with HDMI-CEC, to monitor TV power state</li>
-          <li><strong>Data persistence:</strong> Designed a Room/SQLite persistence layer for local data storage</li>
-          <li><strong>Media pipeline:</strong> Built ExoPlayer-based media playback and Glide-based image loading</li>
-          <li><strong>Cross-platform exposure:</strong> Contributed a couple of features to a React Native codebase</li>
-          <li><strong>Notifications, analytics &amp; stability:</strong> Delivered a TV-friendly push notification service and an in-house analytics pipeline with network-aware batched uploads, plus on-device bug reporting and Firebase Crashlytics for diagnostics</li>
-          <li><strong>Platform collaboration:</strong> Partnered with platform and hardware teams through Gerrit code reviews on AOSP system app changes</li>
+          <li><strong>Architecture and reliability:</strong> Split a monolithic application into separate AOSP system APKs with Soong/Gradle builds, isolating failures to prevent cascading outages.</li>
+          <li><strong>IPC and shared state:</strong> Enabled cross-app data sharing through a content provider-based state service; implemented AIDL, broadcast receivers, and background/foreground services.</li>
+          <li><strong>System apps and inputs:</strong> Owned Android 11 AOSP onboarding apps through release; implemented Leanback focus/navigation, integrated three TV Input Framework inputs, and enabled IR, IP, CEC, and Bluetooth device control.</li>
+          <li><strong>Real-time communication:</strong> Integrated Zoom and OpenTok calling; built WebRTC from source with custom audio handling for remote control, and synchronized states across devices using Socket.IO.</li>
         </ul>
+        <details class="job-more"><summary>More engineering contributions</summary>
+          <ul class="job-bullets">
+            <li><strong>Memory and stability:</strong> Reduced memory use on 3 GB RAM devices through lazy allocation, buffer reuse, and disk-backed storage; verified a WebRTC leak fix that resolved allocation failures requiring device restarts.</li>
+            <li><strong>Connectivity and recovery:</strong> Owned Wi-Fi selection, connection, and recovery workflows; implemented OkHttp retry interceptors and connectivity recovery following system-wide network outages.</li>
+            <li><strong>Device integration:</strong> Implemented smart-plug setup and TV power-state detection using power readings reported over BLE/MQTT, with HDMI-CEC as a fallback.</li>
+            <li><strong>State and media:</strong> Implemented ViewModel/LiveData state management and Room/SQLite persistence; delivered cloud-backed photos and video streaming with Glide and ExoPlayer.</li>
+            <li><strong>Notifications and diagnostics:</strong> Delivered TV-friendly notifications, network-aware batched analytics uploads, and on-device bug reporting; integrated Firebase Crashlytics for production diagnostics.</li>
+            <li><strong>Platform integration and review:</strong> Integrated privileged apps into AOSP system images, configured permission allowlists, and handled runtime permissions; reviewed code through Gerrit with platform and hardware teams.</li>
+          </ul>
+        </details>
       </article>
 
       <article class="job reveal">
@@ -413,10 +112,57 @@
         <p class="job-meta">Hyderabad, India · Jul 2021 – Apr 2022</p>
         <p class="job-sub">Enterprise CRM application</p>
         <ul class="job-bullets">
-          <li><strong>Feature development:</strong> Delivered new features and resolved bugs on a large-scale enterprise CRM application</li>
-          <li><strong>Agile delivery:</strong> Coordinated with QA and backend teams in Agile sprints to ship consistent, stable releases</li>
+          <li><strong>Feature delivery and collaboration:</strong> Delivered features and resolved defects in an enterprise CRM application, collaborating with QA and backend teams through Agile sprints.</li>
         </ul>
       </article>
+    </div>
+  </section>
+
+  <section id="skills">
+    <span class="ghost-num" aria-hidden="true">02</span>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="section-eyebrow">Technical toolkit</p>
+        <h2 class="section-title">Tools I build with.</h2>
+      </div>
+      <div class="skill-list reveal">
+        <div class="skill-row">
+          <p class="skill-cat">Languages</p>
+          <p class="skill-items">Kotlin, Java, Python</p>
+        </div>
+        <div class="skill-row">
+          <p class="skill-cat">Android and TV</p>
+          <p class="skill-items">Android SDK, Android TV, AOSP, Jetpack Compose, Leanback, WorkManager</p>
+        </div>
+        <div class="skill-row">
+          <p class="skill-cat">Architecture and Dependency Injection</p>
+          <p class="skill-items">MVVM, Multi-module Architecture, Hilt, Dagger 2</p>
+        </div>
+        <div class="skill-row">
+          <p class="skill-cat">Networking and Concurrency</p>
+          <p class="skill-items">Retrofit, OkHttp, Socket.IO, MQTT, Kotlin Coroutines, Flow, Channels</p>
+        </div>
+        <div class="skill-row">
+          <p class="skill-cat">Data and Persistence</p>
+          <p class="skill-items">Room, SQLite, DataStore</p>
+        </div>
+        <div class="skill-row">
+          <p class="skill-cat">Media and Communication</p>
+          <p class="skill-items">WebRTC, ExoPlayer</p>
+        </div>
+        <div class="skill-row">
+          <p class="skill-cat">Device Connectivity</p>
+          <p class="skill-items">Bluetooth Low Energy (BLE), Wi-Fi, HDMI-CEC</p>
+        </div>
+        <div class="skill-row">
+          <p class="skill-cat">Testing and Diagnostics</p>
+          <p class="skill-items">Appium, Robot Framework, Android Profiler, ADB, Logcat, Crashlytics, LeakCanary</p>
+        </div>
+        <div class="skill-row">
+          <p class="skill-cat">Build and Version Control</p>
+          <p class="skill-items">Gradle, Soong, Repo, Jenkins, R8/ProGuard, Git, Gerrit</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -424,8 +170,8 @@
     <span class="ghost-num" aria-hidden="true">03</span>
     <div class="wrap">
       <div class="section-head reveal">
-        <p class="section-eyebrow">03 / Education</p>
-        <h2 class="section-title">Foundation</h2>
+        <p class="section-eyebrow">Education</p>
+        <h2 class="section-title">An engineering foundation.</h2>
       </div>
       <div class="edu reveal">
         <p class="edu-degree">B.Tech, Electronics &amp; Communication Engineering</p>
@@ -438,37 +184,18 @@
 
 <footer id="contact">
   <div class="wrap">
-    <p class="cta reveal">Let's build something<span class="accent-dot">.</span></p>
+    <div><p class="cta">Let’s build something that works<span class="accent-dot">.</span></p><p class="contact-intro">Have an Android or AOSP opportunity in mind? Let’s talk.</p></div>
     <div class="contact-links reveal">
-      <a class="btn primary" href="assets/docs/Avinash_Ummagani_Resume.pdf" download>Download résumé ↓</a>
+      <a class="btn primary" href="assets/docs/Avinash_Ummagani_Resume.pdf" download>Download Resume ↓</a>
       <a class="btn" href="mailto:avinash.ummagani@gmail.com">avinash.ummagani@gmail.com</a>
       <a class="btn" href="tel:+918919515836">+91 89195 15836</a>
       <a class="btn" href="https://github.com/AvinashUmmagani">GitHub</a>
       <a class="btn" href="https://linkedin.com/in/avinash-ummagani">LinkedIn</a>
     </div>
-    <p class="footer-note">Hyderabad, India</p>
+    <p class="footer-note"><span>Avinash Ummagani · Hyderabad, India</span><span>Android apps. Connected systems.</span></p>
   </div>
 </footer>
 
-<script>
-  (function(){
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var items = document.querySelectorAll('.reveal');
-    if (reduce || !('IntersectionObserver' in window)){
-      items.forEach(function(el){ el.classList.add('in'); });
-      return;
-    }
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if (entry.isIntersecting){
-          entry.target.classList.add('in');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    items.forEach(function(el){ io.observe(el); });
-  })();
-</script>
-
+<script src="assets/js/experience.js"></script>
 </body>
 </html>
